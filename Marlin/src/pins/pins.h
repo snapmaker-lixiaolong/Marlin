@@ -512,6 +512,8 @@
   #include "stm32/pins_MKS_ROBIN_LITE3.h"       // STM32F1                                env:mks_robin_lite3
 #elif MB(MKS_ROBIN_PRO)
   #include "stm32/pins_MKS_ROBIN_PRO.h"         // STM32F1                                env:mks_robin_pro
+#elif MB(SNAPMAKER_ORIGINAL)
+  #include "stm32/pins_SNAPMAKER_ORIGINAL.h"    // STM32F1                                env:STM32F103RE
 
 //
 // ARM Cortex-M4F
