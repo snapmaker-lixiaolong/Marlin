@@ -17,11 +17,11 @@
     "libopencm3": {
       "ldscript": "stm32f103xc.ld"
     },
-    "mcu": "stm32f103rct6",
+    "mcu": "stm32f105rct6",
     "variant": "stm32f1"
   },
   "debug": {
-    "jlink_device": "STM32F103RC",
+    "jlink_device": "STM32F105RC",
     "openocd_target": "stm32f1x",
     "svd_path": "STM32F103xx.svd"
   },
@@ -31,7 +31,7 @@
     "libopencm3",
     "stm32cube"
   ],
-  "name": "STM32F103RC (48k RAM. 256k Flash)",
+  "name": "STM32F105RC (48k RAM. 256k Flash)",
   "upload": {
     "disable_flushing": false,
     "maximum_ram_size": 49152,
