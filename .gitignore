@@ -145,6 +145,8 @@ Marlin/*/readme.txt
 Marlin/*/*/readme.txt
 Marlin/*/*/*/readme.txt
 Marlin/*/*/*/*/readme.txt
+arduino_framework/scripts/env.txt
+arduino_framework/scripts/env_old.txt
 
 # Secure Credentials
 Configuration_Secure.h
