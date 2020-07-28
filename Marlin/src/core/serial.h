@@ -267,6 +267,12 @@ extern uint8_t marlin_debug_flags;
 
 #define SERIAL_ECHO_TERNARY(TF, PRE, ON, OFF, POST) serial_ternary(TF, PSTR(PRE), PSTR(ON), PSTR(OFF), PSTR(POST))
 
+/*printf*/
+#define TXD_BUFF_SIZE 128
+extern char txd_buff[TXD_BUFF_SIZE];
+#define SNAPMAKER_PRINTF(string, args...)   {sprintf(txd_buff, string, args); SERIAL_ECHOPGM(txd_buff);}
+
+
 //
 // Functions for serial printing from PROGMEM. (Saves loads of SRAM.)
 //

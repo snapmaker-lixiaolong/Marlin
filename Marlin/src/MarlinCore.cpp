@@ -1075,6 +1075,7 @@ void setup() {
     OUT_WRITE(STAT_LED_RED_PIN, LOW); // OFF
   #endif
 
+
   #if PIN_EXISTS(STAT_LED_BLUE)
     OUT_WRITE(STAT_LED_BLUE_PIN, LOW); // OFF
   #endif
@@ -1184,6 +1185,8 @@ void setup() {
   #endif
 
   SETUP_LOG("setup() completed.");
+
+  SNAPMAKER_PRINTF("\r\nexit setup:%d\r\n", __LINE__);
 }
 
 /**
@@ -1212,6 +1215,5 @@ void loop() {
     queue.advance();
 
     endstops.event_handler();
-
   } while (ENABLED(__AVR__)); // Loop forever on slower (AVR) boards
 }

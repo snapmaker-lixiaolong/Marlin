@@ -1037,7 +1037,7 @@ void Temperature::manage_heater() {
   if (!raw_temps_ready) return;
 
   updateTemperaturesFromRawValues(); // also resets the watchdog
-
+  
   #if ENABLED(HEATER_0_USES_MAX6675)
     if (temp_hotend[0].celsius > _MIN(HEATER_0_MAXTEMP, HEATER_0_MAX6675_TMAX - 1.0)) max_temp_error(H_E0);
     if (temp_hotend[0].celsius < _MAX(HEATER_0_MINTEMP, HEATER_0_MAX6675_TMIN + .01)) min_temp_error(H_E0);
@@ -1054,8 +1054,10 @@ void Temperature::manage_heater() {
 
     HOTEND_LOOP() {
       #if ENABLED(THERMAL_PROTECTION_HOTENDS)
-        if (degHotend(e) > temp_range[e].maxtemp)
+        if (degHotend(e) > temp_range[e].maxtemp) {
           _temp_error((heater_ind_t)e, str_t_thermal_runaway, GET_TEXT(MSG_THERMAL_RUNAWAY));
+          SNAPMAKER_PRINTF("instead of _temp_error:%d\r\n", __LINE__);
+        }
       #endif
 
       #if HEATER_IDLE_HANDLER
@@ -1107,8 +1109,10 @@ void Temperature::manage_heater() {
   #if HAS_HEATED_BED
 
     #if ENABLED(THERMAL_PROTECTION_BED)
-      if (degBed() > BED_MAXTEMP)
+      if (degBed() > BED_MAXTEMP) {
         _temp_error(H_BED, str_t_thermal_runaway, GET_TEXT(MSG_THERMAL_RUNAWAY));
+        SNAPMAKER_PRINTF("instead of _temp_error:%d\r\n", __LINE__);
+      }
     #endif
 
     #if WATCH_BED
@@ -1589,12 +1593,17 @@ void Temperature::updateTemperaturesFromRawValues() {
   #if ENABLED(HEATER_1_USES_MAX6675)
     temp_hotend[1].raw = READ_MAX6675(1);
   #endif
+
   #if HOTENDS
     HOTEND_LOOP() temp_hotend[e].celsius = analog_to_celsius_hotend(temp_hotend[e].raw, e);
   #endif
   #if HAS_HEATED_BED
     temp_bed.celsius = analog_to_celsius_bed(temp_bed.raw);
   #endif
+
+  //SNAPMAKER_PRINTF("hotend adc:%d, %f\r\n", temp_hotend[0].raw, temp_hotend[0].celsius);
+  //SNAPMAKER_PRINTF("bed adc:%d, %f\r\n", temp_bed.raw, temp_bed.celsius);
+  
   #if HAS_TEMP_CHAMBER
     temp_chamber.celsius = analog_to_celsius_chamber(temp_chamber.raw);
   #endif
@@ -2305,7 +2314,6 @@ void Temperature::disable_all_heaters() {
  * Update raw temperatures
  */
 void Temperature::update_raw_temperatures() {
-
   #if HAS_TEMP_ADC_0 && DISABLED(HEATER_0_USES_MAX6675)
     temp_hotend[0].update();
   #endif
@@ -2366,6 +2374,7 @@ void Temperature::readings_ready() {
 
   // Update the raw values if they've been read. Else we could be updating them during reading.
   if (!raw_temps_ready) update_raw_temperatures();
+
 
   // Filament Sensor - can be read any time since IIR filtering is used
   #if ENABLED(FILAMENT_WIDTH_SENSOR)
@@ -2431,13 +2440,15 @@ void Temperature::readings_ready() {
             || temp_hotend[e].soft_pwm_amount > 0
           #endif
         );
-        if (rawtemp > temp_range[e].raw_max * tdir) max_temp_error((heater_ind_t)e);
-        if (heater_on && rawtemp < temp_range[e].raw_min * tdir && !is_preheating(e)) {
-          #ifdef MAX_CONSECUTIVE_LOW_TEMPERATURE_ERROR_ALLOWED
-            if (++consecutive_low_temperature_error[e] >= MAX_CONSECUTIVE_LOW_TEMPERATURE_ERROR_ALLOWED)
-          #endif
-              min_temp_error((heater_ind_t)e);
-        }
+        #if ENABLED(THERMAL_PROTECTION_HOTENDS)
+          if (rawtemp > temp_range[e].raw_max * tdir) max_temp_error((heater_ind_t)e);
+          if (heater_on && rawtemp < temp_range[e].raw_min * tdir && !is_preheating(e)) {
+            #ifdef MAX_CONSECUTIVE_LOW_TEMPERATURE_ERROR_ALLOWED
+              if (++consecutive_low_temperature_error[e] >= MAX_CONSECUTIVE_LOW_TEMPERATURE_ERROR_ALLOWED)
+            #endif
+                min_temp_error((heater_ind_t)e);
+          }
+        #endif
         #ifdef MAX_CONSECUTIVE_LOW_TEMPERATURE_ERROR_ALLOWED
           else
             consecutive_low_temperature_error[e] = 0;
@@ -2458,8 +2469,10 @@ void Temperature::readings_ready() {
         || (temp_bed.soft_pwm_amount > 0)
       #endif
     ;
-    if (BEDCMP(temp_bed.raw, maxtemp_raw_BED)) max_temp_error(H_BED);
-    if (bed_on && BEDCMP(mintemp_raw_BED, temp_bed.raw)) min_temp_error(H_BED);
+    #if ENABLED(THERMAL_PROTECTION_BED)
+      if (BEDCMP(temp_bed.raw, maxtemp_raw_BED)) max_temp_error(H_BED);
+      if (bed_on && BEDCMP(mintemp_raw_BED, temp_bed.raw)) min_temp_error(H_BED);
+    #endif
   #endif
 
   #if HAS_HEATED_CHAMBER

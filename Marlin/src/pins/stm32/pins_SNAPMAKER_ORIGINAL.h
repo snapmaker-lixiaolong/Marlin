@@ -29,8 +29,8 @@
  * 21017 Victor Perez Marlin for stm32f1 test
  */
 
-#define BOARD_INFO_NAME      "Misc. STM32F1R"
-#define DEFAULT_MACHINE_NAME "STM32F103RET6"
+#define BOARD_INFO_NAME      "SNAPMAKER ORIGINAL"
+#define DEFAULT_MACHINE_NAME "SNAPMAKER ORIGINAL STM32F103RET6"
 
 // Ignore temp readings during development.
 //#define BOGUS_TEMPERATURE_GRACE_PERIOD 2000
@@ -38,61 +38,63 @@
 //
 // Limit Switches
 //
-#define X_STOP_PIN         PB3
-#define Y_STOP_PIN         PB4
-#define Z_STOP_PIN         PB5
+#define X_STOP_PIN         PC11
+#define Y_STOP_PIN         PC10
+#define Z_STOP_PIN         PA8
 
 //
 // Steppers
 //
-#define X_STEP_PIN         PC0
-#define X_DIR_PIN          PC1
-#define X_ENABLE_PIN       PA8
+#define X_STEP_PIN         PB5
+#define X_DIR_PIN          PB6
+#define X_ENABLE_PIN       PB7
 
-#define Y_STEP_PIN         PC2
-#define Y_DIR_PIN          PC3
-#define Y_ENABLE_PIN       PA8
+#define Y_STEP_PIN         PB8
+#define Y_DIR_PIN          PB9
+#define Y_ENABLE_PIN       PB4
 
-#define Z_STEP_PIN         PC4
-#define Z_DIR_PIN          PC5
-#define Z_ENABLE_PIN       PA8
+#define Z_STEP_PIN         PB3
+#define Z_DIR_PIN          PD2
+#define Z_ENABLE_PIN       PC12
 
-#define E0_STEP_PIN        PC6
-#define E0_DIR_PIN         PC7
-#define E0_ENABLE_PIN      PA8
+#define E0_STEP_PIN        PA4
+#define E0_DIR_PIN         PA1
+#define E0_ENABLE_PIN      PA0
 
 /**
  * TODO: Currently using same Enable pin to all steppers.
  */
 
-#define E1_STEP_PIN        PC8
-#define E1_DIR_PIN         PC9
-#define E1_ENABLE_PIN      PA8
+//#define E1_STEP_PIN        PC8
+//#define E1_DIR_PIN         PC9
+//#define E1_ENABLE_PIN      PA8
 
-#define E2_STEP_PIN        PC10
-#define E2_DIR_PIN         PC11
-#define E2_ENABLE_PIN      PA8
+//#define E2_STEP_PIN        PC10
+//#define E2_DIR_PIN         PC11
+//#define E2_ENABLE_PIN      PA8
 
 //
 // Misc. Functions
 //
-#define SDSS               PA4
-#define LED_PIN            PD2
+//#define SDSS               PA4
+#define LED_BLUE_PIN       PC7
+#define LED_RED_PIN        PC8
 
 //
 // Heaters / Fans
 //
 #define HEATER_0_PIN       PB0   // EXTRUDER 1
-#define HEATER_1_PIN       PB1
+//#define HEATER_1_PIN       PB1
 
-#define HEATER_BED_PIN     PA3   // BED
+#define HEATER_BED_PIN     PA7   // BED
 
 //
 // Temperature Sensors
 //
-#define TEMP_BED_PIN       PA0   // Analog Input
-#define TEMP_0_PIN         PA1   // Analog Input
-#define TEMP_1_PIN         PA2   // Analog Input
+#define TEMP_BED_PIN       PC4   // Analog Input
+#define TEMP_0_PIN         PC5   // Analog Input
+
+//#define TEMP_1_PIN         PA2   // Analog Input
 
 //
 // LCD Pins
