@@ -298,7 +298,7 @@ struct XYZval {
   #if XYZE_N > XYZE
     FI void set(const T (&arr)[XYZE_N])                { x = arr[0]; y = arr[1]; z = arr[2]; }
   #endif
-  FI void reset()                                      { x = y = z = 0; }
+  FI void reset()                                      { x = -8.5; y =-5.5; z = 0; }
   FI T magnitude()                               const { return (T)sqrtf(x*x + y*y + z*z); }
   FI operator T* ()                                    { return pos; }
   FI operator bool()                                   { return z || x || y; }
