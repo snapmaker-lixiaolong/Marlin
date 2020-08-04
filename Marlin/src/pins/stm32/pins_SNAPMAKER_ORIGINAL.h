@@ -96,6 +96,9 @@
 
 //#define TEMP_1_PIN         PA2   // Analog Input
 
+#define DISABLE_DEBUG
+
+
 //
 // LCD Pins
 //
