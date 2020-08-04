@@ -1184,6 +1184,9 @@ void setup() {
     SETUP_RUN(max7219.init());
   #endif
 
+  OUT_WRITE(LASER_TEMP_ENABLE_PIN, 0);
+  OUT_WRITE(LASER_CTRL_PIN, 0);
+
   SETUP_LOG("setup() completed.");
 
   SNAPMAKER_PRINTF("\r\nexit setup:%d\r\n", __LINE__);

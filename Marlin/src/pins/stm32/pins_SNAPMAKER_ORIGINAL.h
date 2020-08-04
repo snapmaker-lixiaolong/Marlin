@@ -96,6 +96,13 @@
 
 //#define TEMP_1_PIN         PA2   // Analog Input
 
+//Laser or temp enable
+#define LASER_TEMP_ENABLE_PIN    PB10
+
+//Laser ctrl
+#define LASER_CTRL_PIN     PB1
+
+
 #define DISABLE_DEBUG
 
 
